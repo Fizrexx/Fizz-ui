@@ -4,9 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fizrexx | Professional Portfolio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" as="style">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Critical CSS */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #3a86ff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
     <!-- Preloader -->
@@ -30,88 +57,45 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div id="particles-js"></div>
-        <div class="hero-content animate-left">
-            <h1>Hi, I'm <span>Fizrexx</span></h1>
-            <p>Professional Web Developer & Designer with 5+ years of experience creating stunning digital experiences that drive results.</p>
-            <a href="#contact" class="btn pulse">Get In Touch</a>
-            <div class="social-icons">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#"><i class="fab fa-github"></i></a>
-            </div>
-        </div>
-        <div class="hero-image animate-right">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Fizrexx">
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="about" id="about">
-        <div class="section-title animate-top">
-            <h2>About Me</h2>
-            <p>Get to know more about me, my skills, and what I can do for you</p>
-        </div>
-        <div class="about-content">
-            <div class="about-image animate-left">
-                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="About Fizrexx">
-            </div>
-            <div class="about-text animate-right">
-                <h3>Who Am I?</h3>
-                <p>I'm Fizrexx, a passionate web developer and designer dedicated to creating beautiful, functional, and user-friendly digital experiences.</p>
-                
-                <div class="skills">
-                    <div class="skill-item">
-                        <div class="skill-info">
-                            <span>Web Development</span>
-                            <span>95%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 95%"></div>
-                        </div>
-                    </div>
-                    <!-- More skill items -->
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div id="particles-js"></div>
+            <div class="hero-content animate-left">
+                <h1>Hi, I'm <span>Fizrexx</span></h1>
+                <p>Professional Web Developer & Designer with 5+ years of experience</p>
+                <a href="#contact" class="btn pulse">Get In Touch</a>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
                 </div>
             </div>
-        </div>
-    </section>
+            <div class="hero-image animate-right">
+                <img src="assets/profile.webp" alt="Fizrexx" width="500" height="500" loading="lazy">
+            </div>
+        </section>
 
-    <!-- Services Section -->
-    <section class="services" id="services">
-        <div class="section-title animate-top">
-            <h2>My Services</h2>
-            <p>Here are the services I offer to help grow your business</p>
-        </div>
-        <div class="services-container">
-            <!-- Service cards -->
-        </div>
-    </section>
+        <!-- Other Sections -->
+        <section class="about" id="about">
+            <!-- About content -->
+        </section>
 
-    <!-- Portfolio Section -->
-    <section class="portfolio" id="portfolio">
-        <div class="section-title animate-top">
-            <h2>My Portfolio</h2>
-            <p>Check out some of my recent projects and work samples</p>
-        </div>
-        <div class="portfolio-container">
-            <!-- Portfolio items -->
-        </div>
-    </section>
+        <section class="services" id="services">
+            <!-- Services content -->
+        </section>
 
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="section-title animate-top">
-            <h2>Contact Me</h2>
-            <p>Get in touch for projects, collaborations or just to say hello</p>
-        </div>
-        <div class="contact-container">
-            <!-- Contact form and info -->
-        </div>
-    </section>
+        <section class="portfolio" id="portfolio">
+            <!-- Portfolio content -->
+        </section>
+
+        <section class="contact" id="contact">
+            <!-- Contact content -->
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer>
@@ -122,24 +106,21 @@
         </div>
     </footer>
 
-    <!-- Back to Top -->
+    <!-- UI Elements -->
     <div class="back-to-top">
         <i class="fas fa-arrow-up"></i>
     </div>
-
-    <!-- Fizrexx Branding -->
     <div class="fizrexx-brand">
         <i class="fas fa-code"></i>
         <span>Fizrexx</span>
     </div>
-
-    <!-- Sponsor Badge -->
     <div class="sponsor-badge">
         <i class="fab fa-whatsapp"></i>
         <span>Biayai oleh DanaS</span>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script src="script.js"></script>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
+    <script src="script.js" defer></script>
 </body>
-      </html>
+    </html>
