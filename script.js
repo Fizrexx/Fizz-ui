@@ -88,6 +88,173 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Portfolio Filtering
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
+    
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove active class from all buttons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            // Add active class to clicked button
+            button.classList.add('active');
+            
+            const filterValue = button.getAttribute('data-filter');
+            
+            portfolioItems.forEach(item => {
+                if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                    item.style.display = 'block';
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                    }, 50);
+                } else {
+                    item.style.opacity = '0';
+                    setTimeout(() => {
+                        item.style.display = 'none';
+                    }, 300);
+                }
+            });
+        });
+    });
+
+    // Testimonials Slider
+    const testimonialsSlider = document.querySelector('.testimonials-slider');
+    let isDragging = false;
+    let startPos = 0;
+    let currentTranslate = 0;
+    let prevTranslate = 0;
+    let currentIndex = 0;
+    
+    testimonialsSlider.addEventListener('mousedown', dragStart);
+    testimonialsSlider.addEventListener('touchstart', dragStart);
+    
+    testimonialsSlider.addEventListener('mousemove', drag);
+    testimonialsSlider.addEventListener('touchmove', drag);
+    
+    testimonialsSlider.addEventListener('mouseup', dragEnd);
+    testimonialsSlider.addEventListener('mouseleave', dragEnd);
+    testimonialsSlider.addEventListener('touchend', dragEnd);
+    
+    function dragStart(e) {
+        if (e.type === 'touchstart') {
+            startPos = e.touches[0].clientX;
+        } else {
+            startPos = e.clientX;
+            e.preventDefault();
+        }
+        isDragging = true;
+        
+        testimonialsSlider.style.cursor = 'grabbing';
+        testimonialsSlider.style.transition = 'none';
+    }
+    
+    function drag(e) {
+        if (!isDragging) return;
+        
+        let currentPosition;
+        if (e.type === 'touchmove') {
+            currentPosition = e.touches[0].clientX;
+        } else {
+            currentPosition = e.clientX;
+        }
+        
+        const diff = currentPosition - startPos;
+        testimonialsSlider.style.transform = `translateX(${currentTranslate + diff}px)`;
+    }
+    
+    function dragEnd() {
+        isDragging = false;
+        testimonialsSlider.style.cursor = 'grab';
+        
+        const movedBy = currentTranslate - prevTranslate;
+        
+        if (movedBy < -100 && currentIndex < testimonialsSlider.children.length - 1) {
+            currentIndex += 1;
+        }
+        
+        if (movedBy > 100 && currentIndex > 0) {
+            currentIndex -= 1;
+        }
+        
+        setPositionByIndex();
+    }
+    
+    function setPositionByIndex() {
+        currentTranslate = currentIndex * -100;
+        prevTranslate = currentTranslate;
+        testimonialsSlider.style.transition = 'transform 0.5s ease-out';
+        testimonialsSlider.style.transform = `translateX(${currentTranslate}%)`;
+    }
+
+    // Animate skill bars on scroll
+    const skillBars = document.querySelectorAll('.skill-level');
+    
+    function animateSkillBars() {
+        skillBars.forEach(bar => {
+            const level = bar.getAttribute('data-level');
+            if (isElementInViewport(bar)) {
+                bar.style.width = level + '%';
+            }
+        });
+    }
+    
+    function isElementInViewport(el) {
+        const rect = el.getBoundingClientRect();
+        return (
+            rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.bottom >= 0
+        );
+    }
+    
+    window.addEventListener('scroll', animateSkillBars);
+    window.addEventListener('load', animateSkillBars);
+
+    // Animate stats counters
+    const statNumbers = document.querySelectorAll('.stat-number');
+    
+    function animateStats() {
+        statNumbers.forEach(number => {
+            const target = +number.getAttribute('data-count');
+            const count = +number.innerText;
+            const increment = target / 100;
+            
+            if (count < target && isElementInViewport(number)) {
+                number.innerText = Math.ceil(count + increment);
+                setTimeout(animateStats, 20);
+            } else {
+                number.innerText = target;
+            }
+        });
+    }
+    
+    window.addEventListener('scroll', animateStats);
+    window.addEventListener('load', animateStats);
+
+    // Contact Form Submission
+    const contactForm = document.getElementById('contactForm');
+    
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(contactForm);
+        const submitBtn = contactForm.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.innerText;
+        
+        submitBtn.disabled = true;
+        submitBtn.innerText = 'Sending...';
+        
+        // Simulate form submission (replace with actual AJAX call)
+        setTimeout(() => {
+            submitBtn.innerText = 'Message Sent!';
+            contactForm.reset();
+            
+            setTimeout(() => {
+                submitBtn.innerText = originalBtnText;
+                submitBtn.disabled = false;
+            }, 3000);
+        }, 1500);
+    });
+
     // Particles.js Configuration
     if (typeof particlesJS !== 'undefined') {
         particlesJS('particles-js', {
@@ -197,6 +364,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Set current year in footer
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
     // Add smooth scrolling to all links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
@@ -214,4 +384,21 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // Initialize animations when elements come into view
+    const animateOnScroll = function() {
+        const elements = document.querySelectorAll('.animate-on-scroll');
+        
+        elements.forEach(element => {
+            const elementPosition = element.getBoundingClientRect().top;
+            const windowHeight = window.innerHeight;
+            
+            if (elementPosition < windowHeight - 100) {
+                element.classList.add('animated');
+            }
+        });
+    };
+    
+    window.addEventListener('scroll', animateOnScroll);
+    window.addEventListener('load', animateOnScroll);
 });
